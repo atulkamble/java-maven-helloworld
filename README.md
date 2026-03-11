@@ -205,22 +205,92 @@ java -cp target/hello-maven-1.0-SNAPSHOT.jar com.example.App
 
 ---
 
-# 1️⃣1️⃣ Useful Maven Commands
+# 1️⃣1️⃣ Maven Lifecycle Stages
 
-| Command        | Description           |
-| -------------- | --------------------- |
-| `mvn validate` | Validate project      |
-| `mvn compile`  | Compile source code   |
-| `mvn test`     | Run unit tests        |
-| `mvn package`  | Create JAR            |
-| `mvn install`  | Install in local repo |
-| `mvn clean`    | Delete target folder  |
+This project is configured with **all 7 Maven lifecycle stages**:
 
-Example:
+## Complete Lifecycle Flow
+
+```
+VALIDATE → COMPILE → TEST → PACKAGE → VERIFY → INSTALL → DEPLOY
+```
+
+| Stage    | Command        | Description                              |
+| -------- | -------------- | ---------------------------------------- |
+| 1️⃣ **VALIDATE** | `mvn validate` | Validate project structure & requirements |
+| 2️⃣ **COMPILE**  | `mvn compile`  | Compile source code                       |
+| 3️⃣ **TEST**     | `mvn test`     | Run unit tests (*Test.java)               |
+| 4️⃣ **PACKAGE**  | `mvn package`  | Create JAR file                           |
+| 5️⃣ **VERIFY**   | `mvn verify`   | Run integration tests (*IT.java)          |
+| 6️⃣ **INSTALL**  | `mvn install`  | Install to local Maven repository         |
+| 7️⃣ **DEPLOY**   | `mvn deploy`   | Deploy to remote repository               |
+
+## Quick Commands
+
+Run all stages at once:
 
 ```bash
-mvn clean package
+mvn clean deploy
 ```
+
+Run through verify (recommended for testing):
+
+```bash
+mvn clean verify
+```
+
+Run individual stage:
+
+```bash
+mvn validate    # Stage 1
+mvn compile     # Stage 2
+mvn test        # Stage 3
+mvn package     # Stage 4
+mvn verify      # Stage 5
+mvn install     # Stage 6
+mvn deploy      # Stage 7
+```
+
+## Run Application
+
+```bash
+# Using Maven exec plugin
+mvn exec:java
+
+# Or run the JAR directly
+java -jar target/hello-maven-1.0-SNAPSHOT.jar
+```
+
+## Helper Scripts
+
+View quick reference:
+
+```bash
+./maven-commands.sh
+```
+
+Run all stages with detailed output:
+
+```bash
+./run-all-stages.sh
+```
+
+## Test Files
+
+- **Unit Tests**: `src/test/java/**/*Test.java` (runs in TEST phase)
+- **Integration Tests**: `src/test/java/**/*IT.java` (runs in VERIFY phase)
+
+## Configured Plugins
+
+✅ **maven-enforcer-plugin** - Validates Maven/Java versions  
+✅ **maven-compiler-plugin** - Compiles Java source code  
+✅ **maven-surefire-plugin** - Runs unit tests  
+✅ **maven-jar-plugin** - Creates JAR with manifest  
+✅ **maven-failsafe-plugin** - Runs integration tests  
+✅ **maven-install-plugin** - Installs to local repo  
+✅ **maven-deploy-plugin** - Deploys to remote repo  
+
+📖 **See [MAVEN_LIFECYCLE.md](MAVEN_LIFECYCLE.md) for detailed documentation**
 
 ---
 
